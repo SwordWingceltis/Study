@@ -44,7 +44,7 @@ stripe元数据：保存stripe的位置、每一个列的在该stripe的统计�
 row group：索引的最小单位，一个stripe中包含多个row group，默认为10000个值组成。
 stream：一个stream表示文件中一段有效的数据，包括索引和数据两类。索引stream保存每一个row group的位置和统计信息，数据stream包括多种类型的数据，具体需要哪几种是由该列类型和编码方式决定。
 
-![avatar](hadoop/hdfs/picture/ORC_detail_one.png)
+![avatar](hadoop/hdfs/ORC_detail_one.png)
 
 在ORC文件中保存了三个层级的统计信息，分别为文件级别、stripe级别和row group级别的，他们都可以用来根据Search ARGuments（谓词下推条件）判断是否可以跳过某些数据，在统计信息中都包含成员数和是否有null值，并且对于不同类型的数据设置一些特定的统计信息。
 
