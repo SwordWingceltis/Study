@@ -12,6 +12,7 @@ ORC的全称是(Optimized Row Columnar)，ORC文件格式是一种Hadoop生态�
 - 查询的时候不需要扫描全部的数据，而只需要读取每次查询涉及的列，这样可以将I/O消耗降低N倍，另外可以保存每一列的统计信息(min、max、sum等)，实现部分的谓词下推。
 - 由于每一列的成员都是同构的，可以针对不同的数据类型使用更高效的数据压缩算法，进一步减小I/O。
 - 由于每一列的成员的同构性，可以使用更加适合CPU pipeline的编码方式，减小CPU的缓存失效。
+
 ![avatar](picture/ORC文件存储格式详细解析1.png)
 
 关于Orc文件格式的官网介绍，见：https://cwiki.apache.org/confluence/display/Hive/LanguageManual+ORC  
