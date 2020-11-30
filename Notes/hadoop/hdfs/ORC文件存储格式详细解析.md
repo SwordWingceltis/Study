@@ -13,7 +13,7 @@ ORC的全称是(Optimized Row Columnar)，ORC文件格式是一种Hadoop生态�
 - 由于每一列的成员都是同构的，可以针对不同的数据类型使用更高效的数据压缩算法，进一步减小I/O。
 - 由于每一列的成员的同构性，可以使用更加适合CPU pipeline的编码方式，减小CPU的缓存失效。
 
-![avatar](picture/ORC文件存储格式详细解析1.png)
+![avatar](picture/ORC文件存储格式详细解析/1.png)
 
 关于Orc文件格式的官网介绍，见：https://cwiki.apache.org/confluence/display/Hive/LanguageManual+ORC  
 需要注意的是，ORC在读写时候需要消耗额外的CPU资源来压缩和解压缩，当然这部分的CPU消耗是非常少的。
@@ -44,7 +44,7 @@ ORC只需要存储schema树中叶子节点的值，而中间的非叶子节点�
 - row group：索引的最小单位，一个stripe中包含多个row group，默认为10000个值组成。
 - stream：一个stream表示文件中一段有效的数据，包括索引和数据两类。索引stream保存每一个row group的位置和统计信息，数据stream包括多种类型的数据，具体需要哪几种是由该列类型和编码方式决定。
 
-![avatar](picture/ORC文件存储格式详细解析2.jpg)
+![avatar](picture/ORC文件存储格式详细解析/2.jpg)
 
 在ORC文件中保存了三个层级的统计信息，分别为文件级别、stripe级别和row group级别的，他们都可以用来根据Search ARGuments（谓词下推条件）判断是否可以跳过某些数据，在统计信息中都包含成员数和是否有null值，并且对于不同类型的数据设置一些特定的统计信息。
 
@@ -103,7 +103,7 @@ ORC文件使用两级压缩机制，首先将一个数据流使用流式编码�
 
 在ORC文件中，在各种数据流的底层，用户可以自选ZLIB, Snappy和LZO压缩方式对数据流进行压缩。编码器一般会将一个数据流压缩成一个个小的压缩单元，在目前的实现中，压缩单元的默认大小是256KB。
 
-####二、Hive+ORC建立数据仓库
+###二、Hive+ORC建立数据仓库
 在建Hive表的时候我们就应该指定文件的存储格式。所以你可以在Hive QL语句里面指定用ORCFile这种文件格式，如下：
 
 ```
@@ -116,9 +116,9 @@ CREATE TABLE ... STORED AS ORC
 
 所有关于ORCFile的参数都是在Hive SQL语句的TBLPROPERTIES字段里面出现，他们是：
 
-![avatar](picture/ORC文件存储格式详细解析3.png)
+![avatar](picture/ORC文件存储格式详细解析/3.png)
 
-####三、Java操作ORC
+###三、Java操作ORC
 到https://orc.apache.org官网下载orc源码包，然后编译获取orc-core-1.3.0.jar、orc-mapreduce-1.3.0.jar、orc-tools-1.3.0.jar，将其加入项目中
 
 ```
